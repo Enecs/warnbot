@@ -18,6 +18,7 @@ module.exports = class BotClient extends Discord.Client {
     this.moment = require('moment'); require("moment-timezone"); require("moment-duration-format");
     this.duration = require("humanize-duration");
     this.Hashids = require("hashids/cjs");
+    this.dhms = require('dhms');
 
     // Bot Colors
     this.color = {
