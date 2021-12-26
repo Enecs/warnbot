@@ -26,8 +26,7 @@ module.exports = class Context {
     this.pagify = this.pagify;
     this.send = this.send;
 
-    this.generateHash = (data1, data2) => new this.client.Hashids(data1 + data2 + new Date().toString(), 3).encode(1, 3, 7);
-    this.generateCaseId = () => this.generateHash(this.client.moment().format('SSMMHH'), this.client.moment().format('DDMMYYYY'));
+    this.generateCaseId = this.client.punishments.generateCaseId;
   }
 
   hasPerm(permission, user = this.guild.me) {

@@ -30,10 +30,13 @@ module.exports = class BotClient extends Discord.Client {
       "info": 'BLUE',
     };
     
-    // Miscelaneous
+    // Databases
     this.database = new (require('@structures/database/Database.js'))(this);
     this.redis = new (require('ioredis'))(`redis://${this.config.redis.host}:${this.config.redis.port}`);
+
+    // Miscelaneous
     this.webhooks = new (require('@structures/handlers/webhooks.js'))(this);
+    this.punishments = new (require('@structures/handlers/punishments.js'))(this);
 
     this.load();
   }

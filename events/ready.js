@@ -20,5 +20,7 @@ module.exports = class extends Event {
 
     setupInit();
     setInterval(setupInit, 120000);
+
+    client.punishments.load();
   }
 }
