@@ -41,8 +41,8 @@ module.exports = class extends Command {
           new ctx.MessageEmbed()
             .setAuthor(`${user.tag} was unbanned`, user.displayAvatarURL({format:'png'}))
             .setColor('GREEN')
-            .addField('Member', `<@${user.id}> (\`${user.tag}\`)`, true)
-            .addField('Moderator', `<@${ctx.author.id}> (\`${ctx.author.tag}\`)`, true)
+            .addField('Member', `<@${user.id}>\n(\`${user.tag}\`)`, true)
+            .addField('Moderator', `<@${ctx.author.id}>\n(\`${ctx.author.tag}\`)`, true)
             .addField('Reason'.slice(0, 1000), reason)
             .setFooter(`Case ${caseId}`)
         ]

@@ -38,10 +38,10 @@ module.exports = class extends Command {
           new ctx.MessageEmbed()
             .setTitle('You were warned')
             .setColor('GOLD')
-            .addField(`Guild`, `${ctx.guild.name.replace(/\`/, '\\`')} \`[${ctx.author.id}]\``, true)
-            .addField('Moderator', `${ctx.author.tag} \`[${ctx.author.id}]\``, true)
+            .addField(`Guild`, `${ctx.guild.name.replace(/\`/, '\\`')}\n\`[${ctx.author.id}]\``, true)
+            .addField('Moderator', `${ctx.author.tag}\n\`[${ctx.author.id}]\``, true)
             .addField('Reason'.slice(0, 1000), reason)
-            .setFooter(`This is an automated message. | Case ID: ${caseId}`)
+            .setFooter(`This is an automated message. • Case ID: ${caseId}`)
         ]
       })
     } catch (err) {
@@ -56,8 +56,8 @@ module.exports = class extends Command {
           new ctx.MessageEmbed()
             .setAuthor(`${user.user.tag} was warned`, user.displayAvatarURL({ format: 'png' }))
             .setColor('GOLD')
-            .addField('Member', `<@${user.id}> (\`${user.user.tag}\`)`, true)
-            .addField('Moderator', `<@${ctx.author.id}> (\`${ctx.author.tag}\`)`, true)
+            .addField('Member', `<@${user.id}>\n(\`${user.user.tag}\`)`, true)
+            .addField('Moderator', `<@${ctx.author.id}>\n(\`${ctx.author.tag}\`)`, true)
             .addField('Reason'.slice(0, 1000), reason)
             .setFooter(`Case ${caseId}`)
         ]
