@@ -48,7 +48,8 @@ module.exports = class Command {
       ctx.sendMsg(new ctx.MessageEmbed()
         .setTitle('Oops')
         .setColor(ctx.color.error)
-        .setDescription(`The error that occured has been logged into our systems. If this is repeative, report it to DanPlayz#7757 at <${ctx.client.config.supportServerInvite}>.\n\`\`\`js\n${err.message}\`\`\``))
+        .setDescription(`The error that occured has been logged into our systems. If this is repeative, report it to DanPlayz#7757 at <${ctx.client.config.supportServerInvite}>.\n\`\`\`js\n${err.message}\`\`\``),
+        { components: [] })
     }
   }
 }
