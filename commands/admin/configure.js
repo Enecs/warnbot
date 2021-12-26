@@ -11,6 +11,11 @@ module.exports = class extends Command {
           type: 'SUB_COMMAND',
         },
         {
+          name: "reset",
+          description: "Reset the config to defaults.",
+          type: 'SUB_COMMAND',
+        },
+        {
           name: "automod",
           description: "Configure the automod settings.",
           type: 'SUB_COMMAND_GROUP',
@@ -189,6 +194,39 @@ module.exports = class extends Command {
               ].join('\n'), true)
             return ctx.sendMsg(embed);
           }
+          case 'reset': {
+            const ireversableEmbed = new ctx.MessageEmbed()
+              .setTitle('Reset')
+              .setColor(ctx.client.color.primary)
+              .setDescription('Are you sure you want to reset the settings? This cannot be reversed.')
+              .setFooter('This will reset all settings to their default values.');
+            const msg = await ctx.sendMsg(ireversableEmbed, {components: [{ type: 1, components: [
+              {type: 2, style:3, customId: 'confirmation_yes', label:"Yes"}, 
+              {type: 2, style:4, customId: 'confirmation_no', label:"No"}
+            ]}] });
+
+            const filter = (interaction) => interaction.customId.startsWith('confirmation_') && interaction.user.id === ctx.interaction.user.id && interaction.message.id == msg.id;
+            const collector = msg.channel.createMessageComponentCollector({ filter, time: 35000 });
+
+            collector.on('end', (_, action) => {
+              if (action === 'yes') return;
+              ctx.sendMsg(new ctx.MessageEmbed().setTitle('Reset Cancelled').setTitle("Okay, I wont reset the server's settings.").setColor('RED'), {components:[],message:msg});
+            })
+            collector.on('collect', async (interaction) => {
+              interaction.deferUpdate();
+              switch (interaction.customId) {
+                case "confirmation_yes": {
+                  collector.stop('yes');
+                  await ctx.database.guilds.deleteOne({ guildId: ctx.guild.id });
+                  ctx.sendMsg(new ctx.MessageEmbed().setTitle('Reset Success').setTitle("The server's settings were reset!").setColor('GREEN'), {components:[],message:msg});
+                  return;
+                }
+                case "confirmation_no": return collector.stop();
+                default: return;
+              }
+            })
+            break;
+          }
           case 'log': {
             const type = ctx.interaction.options.getString('type'), channel = ctx.interaction.options.getChannel('channel');
             if (type === 'member') {
@@ -206,9 +244,17 @@ module.exports = class extends Command {
           case 'role': {
             const type = ctx.interaction.options.getString('type'), role = ctx.interaction.options.getRole('role');
             if (type === 'muted') {
+              if (ctx.guild.id === role.id) {
+                await ctx.database.guilds.updateOne({ guildId: ctx.guild.id }, { $set: { [`roles.${type}`]: null } });
+                return ctx.sendMsg(`The muted role has been cleared.`, {allowedMentions: {parse: []}});
+              }
               await ctx.database.guilds.updateOne({ guildId: ctx.guild.id }, { $set: { [`roles.${type}`]: role.id } });
               return ctx.sendMsg(`The muted role has been set to ${role.name}`, {allowedMentions: {parse: []}});
             } else if (type === 'moderator') {
+              if (ctx.guild.id === role.id) {
+                await ctx.database.guilds.updateOne({ guildId: ctx.guild.id }, { $set: { [`roles.${type}`]: null } });
+                return ctx.sendMsg(`The moderator role has been cleared.`, {allowedMentions: {parse: []}});
+              }
               await ctx.database.guilds.updateOne({ guildId: ctx.guild.id }, { $set: { [`roles.${type}`]: role.id } });
               return ctx.sendMsg(`The moderator role has been set to ${role.name}`, {allowedMentions: {parse: []}});
             }
