@@ -32,7 +32,7 @@ module.exports = class extends Command {
 
     const caseId = ctx.generateCaseId();
 
-    await ctx.guild.members.unban(user, { reason: `${reason} | Case ID: ${caseId} | Moderator: ${ctx.author.tag} [${ctx.author.id}]` });
+    await ctx.guild.members.unban(user, { reason: `Case ID: ${caseId} | Moderator: ${ctx.author.tag} [${ctx.author.id}]` });
 
     let modlog = null;
     if (ctx.guildDb.logs.moderation) {
@@ -46,7 +46,7 @@ module.exports = class extends Command {
             .addField('Reason'.slice(0, 1000), reason)
             .setFooter(`Case ${caseId}`)
         ]
-      }).catch((err) => {})
+      }).catch((err) => null)
     }
     
     await ctx.database.cases.create({

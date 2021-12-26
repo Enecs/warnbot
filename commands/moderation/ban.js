@@ -46,15 +46,15 @@ module.exports = class extends Command {
             .setColor('RED')
             .addField(`Guild`, `${ctx.guild.name.replace(/\`/, '\\`')} \`[${ctx.author.id}]\``, true)
             .addField('Moderator', `${ctx.author.tag} \`[${ctx.author.id}]\``, true)
-            .addField('Case ID', `${caseId}`, true)
             .addField('Reason'.slice(0, 1000), reason)
+            .setFooter(`This is an automated message. | Case ID: ${caseId}`)
         ]
       })
     } catch (err) {
       sentMsg = false;
     }
 
-    await ctx.guild.members.ban(user, { reason: `${reason} | Case ID: | Moderator: ${ctx.author.tag} [${ctx.author.id}]` });
+    await ctx.guild.members.ban(user, { reason: `Case ID: ${caseId} | Moderator: ${ctx.author.tag} [${ctx.author.id}]` });
 
     let modlog = null;
     if (ctx.guildDb.logs.moderation) {
@@ -68,7 +68,7 @@ module.exports = class extends Command {
             .addField('Reason'.slice(0, 1000), reason)
             .setFooter(`DM Status | Case ${caseId}`, `https://singlecolorimage.com/get/${sentMsg ? "33fd8f" : "ff2950"}/120x120`)
         ]
-      }).catch((err) => {})
+      }).catch((err) => null)
     }
 
     await ctx.database.cases.create({
