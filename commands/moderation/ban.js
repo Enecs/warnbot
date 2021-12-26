@@ -44,7 +44,7 @@ module.exports = class extends Command {
           new ctx.MessageEmbed()
             .setTitle('You were banned')
             .setColor('RED')
-            .addField(`Guild`, `${ctx.guild.name.replace(/\`/, '\\`')}\n\`[${ctx.author.id}]\``, true)
+            .addField(`Guild`, `${ctx.guild.name.replace(/\`/, '\\`')}\n\`[${ctx.guild.id}]\``, true)
             .addField('Moderator', `${ctx.author.tag}\n\`[${ctx.author.id}]\``, true)
             .addField('Reason'.slice(0, 1000), reason)
             .setFooter(`This is an automated message. • Case ID: ${caseId}`)
