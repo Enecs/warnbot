@@ -45,7 +45,7 @@ module.exports = class extends Command {
       }
       if(String(time).toLowerCase() !== 'Permanent') {
         duration = ctx.client.dhms(time);
-        if(duration < 30000) return ctx.sendMsg(`You cannot mute someone for less than 30 seconds.`);
+        if(duration < 10000) return ctx.sendMsg(`You cannot mute someone for less than 10 seconds.`);
         if(duration > 604800000) return ctx.sendMsg(`You cannot mute someone for more than 7 days.`);
         time = ctx.client.duration(duration, { round: true });
       }
@@ -98,9 +98,9 @@ module.exports = class extends Command {
         messageId: modlog ? modlog.id : null
       },
       extras: {
-        unmuteCheck: !!time, 
+        unmuteCheck: time !== "Permanent", 
         duration: time,
-        expiresAt: time ? new Date(Date.now() + duration).toISOString() : null,
+        expiresAt: time !== "Permanent" ? new Date(Date.now() + duration).toISOString() : null,
       },
       reason, type: 'mute',
       createdAt: new Date().toISOString(),
