@@ -41,8 +41,7 @@ module.exports = class Command {
 
   async _run(ctx) {
     await ctx.interaction.deferReply();
-    ctx.client.webhooks.command.send({content: `${ctx.author.tag} \`${ctx.author.id}\` used **${ctx.interaction.commandName}** in ${ctx.interaction.guild.name} \`${ctx.interaction.guild.id}\` ||/${ctx.interaction.commandName}${ctx.interaction.options._subcommand?` ${ctx.interaction.options._subcommand} `:''} ${ctx.interaction.options._hoistedOptions.map(m => `${m.name}:${m.value}`).join(' ')}`.slice(0,1995)+'||', allowedMentions: { parse: [] } })
-    ctx.client.statcord.ShardingClient.post(ctx.interaction.commandName, ctx.author.id, ctx.client);
+    ctx.client.webhooks.command.send({content: `${ctx.author.tag} \`${ctx.author.id}\` used **${ctx.interaction.commandName}** in ${ctx.interaction.guild.name} \`${ctx.interaction.guild.id}\` ||/${ctx.interaction.commandName}${ctx.interaction.options._subcommand?` ${ctx.interaction.options._subcommand} `:''} ${ctx.interaction.options._hoistedOptions.map(m => `${m.name}:${m.value}`).join(' ')}`.slice(0,1995)+'||', allowedMentions: { parse: [] } });
     try {
       await this.run(ctx);
     } catch (err) {
