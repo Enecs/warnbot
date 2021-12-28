@@ -30,7 +30,8 @@ module.exports = class extends Command {
             },
           ]
         }
-      ]
+      ],
+      access: "moderator"
     })
   }
 

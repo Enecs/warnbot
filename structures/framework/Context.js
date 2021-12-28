@@ -27,6 +27,9 @@ module.exports = class Context {
     this.send = this.send;
 
     this.generateCaseId = this.client.punishments.generateCaseId;
+    
+    this.access = this.client.accesslevels.getAccess(this.member, this.guildDb);
+    this.checkAccess = (toCheckFor) => this.client.accesslevels.checkAccess(this.member, this.guildDb, toCheckFor);
   }
 
   hasPerm(permission, user = this.guild.me) {

@@ -16,7 +16,8 @@ module.exports = class extends Command {
           name: "reason",
           description: "The reason for the ban.",
         },
-      ]
+      ],
+      access: "moderator"
     })
   }
 

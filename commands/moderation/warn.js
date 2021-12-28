@@ -17,7 +17,8 @@ module.exports = class extends Command {
           description: "The reason for the warning.",
           required: true,
         },
-      ]
+      ],
+      access: "moderator"
     })
   }
 

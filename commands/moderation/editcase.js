@@ -27,7 +27,8 @@ module.exports = class extends Command {
           description: `What would you like to change it to?`,
           required: true,
         }
-      ]
+      ],
+      access: "moderator"
     })
   }
 

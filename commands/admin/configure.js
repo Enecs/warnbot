@@ -120,7 +120,8 @@ module.exports = class extends Command {
             },
           ]
         },
-      ]
+      ],
+      access: "administrator"
     })
   }
   async run(ctx) {

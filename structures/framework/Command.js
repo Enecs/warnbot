@@ -4,6 +4,7 @@ module.exports = class Command {
     this.location = null;
     this.fileName = null;
     this.enabled = "enabled" in options ? options.enabled : true;
+    this.access = options.access;
     
     this.commandData = {
       name: null,

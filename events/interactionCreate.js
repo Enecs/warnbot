@@ -16,6 +16,7 @@ module.exports = class extends Event {
       let cmd = client.commands.get(interaction.commandName);
       if (!cmd) return;
       const ctx = new Context({ client, interaction, guildDb });
+      if(!ctx.checkAccess(cmd.access)) return ctx.sendMsg(`You do not have permission to use this command.`);
       if(interaction.isAutocomplete()) return cmd._autoComplete(ctx);
       if(interaction.isCommand()) return cmd._run(ctx);
     }
