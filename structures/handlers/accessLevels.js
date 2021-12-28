@@ -14,8 +14,8 @@ module.exports = class AccessLevels {
   getAccess(member, guildDb = null) {
     if(this.client.config.admins.includes(member.id)) return this.access.find(m=>m.name==="developer");
     if(guildDb) {
-      if(guildDb.roles.owner && user.roles.cache.has(guildDb.roles.owner)) return this.access.find(m=>m.name==="owner");
-      if(guildDb.roles.administrator && user.roles.cache.has(guildDb.roles.administrator)) return this.access.find(m=>m.name==="administrator");
+      if(member.id === member.guild.ownerId) return this.access.find(m=>m.name==="owner");
+      if(member.permissions.has('MANAGE_GUILD')) return this.access.find(m=>m.name==="administrator");
       if(guildDb.roles.moderator && member.roles.cache.has(guildDb.roles.moderator)) return this.access.find(m=>m.name==="moderator");
     }
     return this.access.find(m=>m.name==="user");
