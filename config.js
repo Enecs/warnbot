@@ -21,6 +21,7 @@ module.exports = {
   // Domain (Used for Auth, RestApi & Links)
   domain: "https://warnbot.enx.so",
 
-  // Bot Logging (Webhooks)
+  // Bot Logging
   webhooks: private.webhooks,
+  statcordKey: private.statcordKey,
 }

@@ -38,6 +38,7 @@ module.exports = class BotClient extends Discord.Client {
     this.webhooks = new (require('@structures/handlers/webhooks.js'))(this);
     this.punishments = new (require('@structures/handlers/punishments.js'))(this);
     this.accesslevels = new (require('@structures/handlers/accessLevels.js'))(this);
+    this.statcordMgr = new (require('@structures/handlers/statcord.js'))(this);
 
     this.load();
   }
