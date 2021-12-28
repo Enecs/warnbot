@@ -1,14 +1,17 @@
 const { ShardingManager } = require('discord.js');
 const config = require('./config.js');
+const Statcord = require('statcord.js');
 
-let manager = null;
-try {
-  manager = new ShardingManager('./bot.js', { totalShards: 'auto', token: config.token });
-  manager.on('shardCreate', (shard) => console.log(`Shard ${shard.id} launched`));
-  manager.spawn();
-  return manager;
-} catch (e) {
-  console.log(`Can't create manager`);
-  console.log(e);
-  return null;
-}
+let manager = new ShardingManager('./bot.js', { totalShards: 'auto', token: config.token });
+
+const statcord = new Statcord.ShardingClient({
+  key: config.statcordKey, manager,
+  postCpuStatistics: false, postMemStatistics: false, postNetworkStatistics: false
+});
+
+manager.spawn();
+
+manager.on('shardCreate', (shard) => console.log(`Shard ${shard.id} launched`));
+
+statcord.on("autopost-start", () => console.log('Started autoposting'));
+statcord.on("post", (status) => console.log(!status ? '[Statcord] Successfully Posted' : '[Statcord] Failed to post'));
