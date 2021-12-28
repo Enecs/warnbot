@@ -9,9 +9,5 @@ const statcord = new Statcord.ShardingClient({
   postCpuStatistics: false, postMemStatistics: false, postNetworkStatistics: false
 });
 
-manager.spawn();
-
 manager.on('shardCreate', (shard) => console.log(`Shard ${shard.id} launched`));
-
-statcord.on("autopost-start", () => console.log('Started autoposting'));
-statcord.on("post", (status) => console.log(!status ? '[Statcord] Successfully Posted' : '[Statcord] Failed to post'));
+manager.spawn();
