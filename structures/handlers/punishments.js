@@ -30,7 +30,7 @@ module.exports = class PunishmentManager {
 
     let databaseUpdates = [];
     for (const mute of db) {
-      if(new Date(mute.extras.expiresAt).getTime() > Date.now()) continue;
+      if(!(new Date(mute.extras.expiresAt).getTime() <= Date.now())) continue;
 
       // Ensure user is still in the guild.
       const guild = await this.client.guilds.cache.get(mute.guildId);
