@@ -19,6 +19,7 @@ module.exports = class BotClient extends Discord.Client {
     this.duration = require("humanize-duration");
     this.Hashids = require("hashids/cjs");
     this.dhms = require('dhms');
+    this.statcord = require('statcord.js');
 
     // Bot Colors
     this.color = {
