@@ -70,10 +70,11 @@ module.exports = class extends Command {
       }
 
       await ctx.client.database.cases.updateOne({ _id: caseData._id }, { $set: { 
-        unmuteCheck: time !== "Permanent", 
-        duration: time, 
-        expiresAt: time !== "Permanent" ? new Date(new Date(caseData.createdAt).getTime() + duration).toISOString() : null 
+        "extras.unmuteCheck": time !== "Permanent", 
+        "extras.duration": time, 
+        "extras.expiresAt": time !== "Permanent" ? new Date(new Date(caseData.createdAt).getTime() + duration).toISOString() : null 
       } });
+      
 
       let updateModLog = true;
       try {
@@ -86,7 +87,7 @@ module.exports = class extends Command {
       }
 
 
-      return ctx.sendMsg(`The case duration has been updated. The mod log was ${updateModLog ? 'updated' : 'unable to be updated'}.`);
+      return ctx.sendMsg(`The case (\`${caseData.caseId}\`) duration has been updated. The mod log was ${updateModLog ? 'updated' : 'unable to be updated'}.`);
     }
 
   }
