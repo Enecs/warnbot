@@ -29,7 +29,7 @@ route.get('/stats', async (req, res, next) => {
       total: {
         guilds: guildCount.reduce((servers, num) => num + servers, 0),
         users: users.reduce((users, num) => num + users, 0),
-        ping: ping.reduce((users, num) => num + users, 0) / ping.length
+        ping: Math.round(ping.reduce((users, num) => num + users, 0) / ping.length)
       }
     };
     await req.redis.setex(`${req.client.config.redis.prefix}STATS`, 2 * 60, JSON.stringify(redisStats))
