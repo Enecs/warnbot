@@ -21,6 +21,15 @@ module.exports = {
   // Domain (Used for Auth, RestApi & Links)
   domain: "https://warnbot.enx.so",
 
+  // Rest Api
+  restapi: {
+    secret: private.restapi.secret,
+    port: private.restapi.port ?? 80,
+    oauth: {
+      client_secret: private.restapi.oauth.client_secret
+    }
+  },
+
   // Bot Logging
   webhooks: private.webhooks,
   statcordKey: private.statcordKey,
