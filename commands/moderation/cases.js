@@ -42,7 +42,7 @@ module.exports = class extends Command {
       case 'user': {
         const user = ctx.interaction.options.getUser('user');
         const cases = await ctx.client.database.cases.find({ guild: ctx.guild.id, "victim.id": user.id });
-        if (!cases) return ctx.sendMsg('No cases found.');
+        if (!cases?.length) return ctx.sendMsg('No cases found.');
         
         return ctx.pagify(generateCaseEmbeds(cases, user.tag, user.displayAvatarURL({format:'png'}), ctx.client.color.primary, ctx.MessageEmbed));
       }
@@ -52,7 +52,7 @@ module.exports = class extends Command {
         const guildCases = moderator 
           ? await ctx.client.database.cases.find({ guild: ctx.guild.id, "moderator.id": moderator.id })
           : await ctx.client.database.cases.find({ guild: ctx.guild.id });
-        if (!guildCases) return ctx.sendMsg('No cases found.');
+        if (!guildCases?.length) return ctx.sendMsg('No cases found.');
 
         return ctx.pagify(generateCaseEmbeds(guildCases, ctx.guild.name, ctx.guild.iconURL({format: 'png'}), ctx.client.color.primary, ctx.MessageEmbed));
       }
