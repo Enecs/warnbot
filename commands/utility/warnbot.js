@@ -94,7 +94,7 @@ module.exports = class extends Command {
           .addField('Uptime', ctx.client.duration(ctx.client.uptime, {round:true}), true)
           .addField('User Count', `${users.reduce((users, num) => num + users, 0).toLocaleString()} users`, true)
           .addField('Server Count', `${guildCount.reduce((servers, num) => num + servers, 0).toLocaleString()} servers`, true)
-          .addField('Operating System', `${os}`, true)
+          .addField('Operating System', os, true)
           .addField('Node Version', process.version, true)
           .addField('Discord.js Version', `v${ctx.client.discord.version}`, true)
           .addField('\u200b', `\`\`\`\n${table.toString()}\`\`\``, true)
