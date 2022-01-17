@@ -64,14 +64,13 @@ module.exports = class extends Command {
       case 'stats': {
         let os = "Unknown";
         if (process.platform) {
-          const platform = process.platform;
-          if (platform === 'win32') os = 'Windows';
-          else if (platform === 'aix') os = 'Aix';
-          else if (platform === 'linux') os = 'Linux';
-          else if (platform === 'darwin') os = 'Darwin';
-          else if (platform === 'openbsd') os = 'OpenBSD';
-          else if (platform === 'sunos') os = 'Solaris';
-          else if (platform === 'freebsd') os = 'FreeBSD';
+          const platform = process.platform, correctOs = {
+            "win32": "Windows",
+            "openbsd": "OpenBSD",
+            "sunos": "Solaris",
+            "freebsd": "FreeBSD"
+          };
+          os = correctOs[platform] ?? platform.toProperCase();
         }
 
         const table = new AsciiTable()
